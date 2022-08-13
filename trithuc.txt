@@ -1,0 +1,14 @@
+
+1
+
+You have probably upgraded to a version of apt that does not keep installed packages by default, you can check by running:
+
+apt-config dump | grep 'Keep-Downloaded-Packages'
+
+and you will likely see:
+
+Binary::apt::APT::Keep-Downloaded-Packages "0";
+
+If that's the case then you can keep packages again by changing that setting to 1/true:
+
+echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' | sudo tee /etc/apt/apt.c
