@@ -12,3 +12,7 @@ Binary::apt::APT::Keep-Downloaded-Packages "0";
 If that's the case then you can keep packages again by changing that setting to 1/true:
 
 echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' | sudo tee /etc/apt/apt.conf.d/99-keep-downloads
+
+
+
+xargs -a hihi.txt apt download
