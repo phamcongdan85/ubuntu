@@ -16,3 +16,14 @@ echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' | sudo tee /etc/apt/ap
 
 
 xargs -a hihi.txt apt download
+
+
+
+Home‎ > ‎Backup‎ > ‎
+Download all installed packages on Ubuntu
+Advertisement:
+Canagon.com - Website for $499, beautiful premade designs, high-performance hosting on all continents, dedicated support team. Learn more >
+
+This will download all installed packages to folder /var/cache/apt/archives
+
+$ dpkg -l | grep "^ii"| awk ' {print $2} ' | xargs sudo apt-get -y install --reinstall --download-only
