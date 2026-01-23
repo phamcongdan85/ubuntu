@@ -1,0 +1,48 @@
+# .dockerignore
+
+# Ignore Python cache and temporary files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.sqlite3
+*.db
+
+# Ignore virtual environments
+venv/
+.env/
+env/
+.venv/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore git and IDE files
+.git/
+.gitignore
+.vscode/
+.idea/
+*.swp
+
+# Ignore Docker-related intermediate files
+docker-compose.override.yml
+*.bak
+*.tmp
+
+# Ignore local data or build artifacts
+data/
+tmp/
+logs/
+*.tar
+*.gz
+*.zip
+
+# Don't send local test scripts or notebooks to Docker build context
+notebooks/
+tests/
+scripts/
+
+# Keep only application code (app folder)
+# Everything else (requirements.txt, Dockerfile, etc.) is copied explicitly

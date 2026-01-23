@@ -1,0 +1,54 @@
+# docker-compose.yml
+version: "3.8"
+
+services:
+  # ----------------------------------------
+  # FastAPI service (BARO BOCPD API)
+  # ----------------------------------------
+  api:
+    build: .
+    container_name: baro_api
+    ports:
+      - "8015:8000"
+    depends_on:
+      - influxdb
+    restart: unless-stopped
+
+  # ----------------------------------------
+  # InfluxDB service (time-series database)
+  # ----------------------------------------
+  influxdb:
+    image: influxdb:1.8
+    container_name: influxdb
+    ports:
+      - "8085:8086"
+    environment:
+      - INFLUXDB_DB=metrics
+      - INFLUXDB_HTTP_AUTH_ENABLED=false
+    volumes:
+      - influxdb_data:/var/lib/influxdb
+    restart: unless-stopped
+
+  # ----------------------------------------
+  # Grafana service (dashboard)
+  # ----------------------------------------
+  grafana:
+    image: grafana/grafana:10.4.3
+    container_name: grafana
+    ports:
+      - "3015:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - influxdb
+    restart: unless-stopped
+
+# ----------------------------------------
+# Volumes để lưu dữ liệu InfluxDB và Grafana
+# ----------------------------------------
+volumes:
+  influxdb_data:
+  grafana_data:
