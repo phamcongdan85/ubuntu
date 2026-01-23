@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  influxdb:
+    image: influxdb:2.7
+    container_name: influxdb
+    ports:
+      - "8087:8086"   # Client access on 172.20.1.36:8087 -> container 8086
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=admin123
+      - DOCKER_INFLUXDB_INIT_ORG=rca_org
+      - DOCKER_INFLUXDB_INIT_BUCKET=rca_bucket
+      - DOCKER_INFLUXDB_INIT_RETENTION=1w
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=my-token
+    volumes:
+      - ./influxdb:/var/lib/influxdb2
+
+  grafana:
+    image: grafana/grafana:10.4.2
+    container_name: grafana
+    depends_on:
+      - influxdb
+    ports:
+      - "3017:3000"   # Client access on 172.20.1.36:3017 -> container 3000
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+
+  rca_service:
+    build: ./rca_service
+    container_name: rca_service
+    depends_on:
+      - influxdb
+    ports:
+      - "8017:8000"   # Client access on 172.20.1.36:8017 -> container 8000
+    environment:
+      - INFLUX_URL=http://influxdb:8086
+      - INFLUX_TOKEN=my-token
+      - INFLUX_ORG=rca_org
+      - INFLUX_BUCKET=rca_bucket

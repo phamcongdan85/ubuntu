@@ -1,0 +1,20 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "RCA Demo Dashboard",
+    "panels": [
+      {
+        "type": "timeseries",
+        "title": "RCA Confidence over time",
+        "datasource": "InfluxDB",
+        "targets": [
+          {
+            "query": "from(bucket: \"rca_bucket\") |> range(start: -1h) |> filter(fn: (r) => r._measurement == \"rca_result\") |> filter(fn:(r) => r._field == \"confidence\") |> aggregateWindow(every: 1m, fn: mean) |> yield()"
+          }
+        ],
+        "gridPos": {"h":8,"w":24,"x":0,"y":0}
+      }
+    ]
+  },
+  "overwrite": true
+}

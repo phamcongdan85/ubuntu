@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  backend:
+    image: cre_backend_dev
+    build: ./backend
+    container_name: cre_backend
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./backend:/app          # 👉 bind mount backend code
+    command: >
+      uvicorn app:app
+      --host 0.0.0.0
+      --port 8501
+      --reload
+
+  frontend:
+    image: cre_frontend_dev
+    build: ./frontend
+    container_name: cre_frontend
+    ports:
+      - "8502:8502"
+    volumes:
+      - ./frontend:/app         # 👉 bind mount frontend code
+    command: >
+      streamlit run app.py
+      --server.port=8502
+      --server.address=0.0.0.0
+    depends_on:
+      - backend

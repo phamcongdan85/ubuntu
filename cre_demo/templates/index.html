@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Credit Risk Scoring Demo</h2>
+
+  <form method="post" action="/score">
+    Customer ID:
+    <input name="customer_id" required>
+    <button type="submit">Score</button>
+  </form>
+
+  {% if pd %}
+    <p><b>Customer:</b> {{ customer_id }}</p>
+    <p><b>PD:</b> {{ pd }}</p>
+    <p><b>Decision:</b> {{ decision }}</p>
+  {% endif %}
+
+  {% if error %}
+    <p style="color:red">{{ error }}</p>
+  {% endif %}
+</body>
+</html>

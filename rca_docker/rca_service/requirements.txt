@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+influxdb-client
+pandas
+numpy
+scikit-learn
+pyyaml
+requests

@@ -1,0 +1,10 @@
+# requirements.txt
+
+influxdb-client
+fastapi
+uvicorn[standard]
+pandas
+numpy
+influxdb           # client cho InfluxDB 1.x
+requests
+fse-baro               # thư viện baro (cài trực tiếp từ PyPI)
