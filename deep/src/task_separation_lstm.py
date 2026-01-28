@@ -3,7 +3,7 @@ from collections import defaultdict
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Embedding, LSTM, Dense
 
-def lstm_task_separation(global_df, window=10, epochs=3):
+def lstm_task_separation(global_df, window=10, epochs=30):
     keys = global_df["log_key"].tolist()
     max_key = max(keys) + 1
 
